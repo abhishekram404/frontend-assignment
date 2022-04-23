@@ -5,14 +5,20 @@ import TableColumn from "app/components/TableColumn/TableColumn";
 import CheckBox from "app/components/CheckBox/CheckBox";
 import { tableColumnsData } from "app/tableColumnsData";
 import { fakeData } from "app/fakeData";
+import { useState } from "react";
 type Props = {};
 
 const Table = (props: Props) => {
+  const [checkedRows, setCheckedRows] = useState([
+    ...Array.from(new Set<string>()),
+  ]);
+
+  console.log(checkedRows);
   return (
     <main className={styles.table}>
-      <TableRow head>
+      <TableRow head checkedRows={checkedRows} setCheckedRows={setCheckedRows}>
         <TableColumn>
-          <CheckBox />
+          <CheckBox setChecked={setCheckedRows} />
         </TableColumn>
         {tableColumnsData.map((column) => (
           <TableColumn key={column.title}>{column.title}</TableColumn>
@@ -20,7 +26,12 @@ const Table = (props: Props) => {
       </TableRow>
 
       {fakeData.map((row) => (
-        <TableRow data={row} key={row.id} />
+        <TableRow
+          data={row}
+          key={row.id}
+          checkedRows={checkedRows}
+          setCheckedRows={setCheckedRows}
+        />
       ))}
     </main>
   );
