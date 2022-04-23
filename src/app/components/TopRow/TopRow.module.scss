@@ -1,0 +1,32 @@
+.topRow {
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rightColumn {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.searchBar {
+  border: 1px solid #d8dadd;
+  padding: 10px;
+  font-size: 1.2rem;
+  outline: none;
+  border-radius: 5px;
+}
+.addNewUserBtn {
+  font-size: 1rem;
+  padding: 13px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: #00425c;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
