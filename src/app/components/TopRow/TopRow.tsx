@@ -1,12 +1,22 @@
 import React from "react";
 import styles from "app/components/TopRow/TopRow.module.scss";
 import { FiPlus } from "react-icons/fi";
-type Props = {};
+type Props = {
+  userInfo: {
+    total: number;
+    selected: number;
+  };
+};
 
-const TopRow = (props: Props) => {
+const TopRow = ({ userInfo }: Props) => {
   return (
     <div className={styles.topRow}>
-      <h2>Users</h2>
+      <h2>
+        Users &nbsp;
+        <small>
+          ({userInfo.selected} out of {userInfo.total} selected)
+        </small>
+      </h2>
       <div className={styles.rightColumn}>
         <input
           type="search"

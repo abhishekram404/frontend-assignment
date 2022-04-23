@@ -6,19 +6,54 @@ import CheckBox from "app/components/CheckBox/CheckBox";
 import { tableColumnsData } from "app/tableColumnsData";
 import { fakeData } from "app/fakeData";
 import { useState } from "react";
-type Props = {};
+import { IUser } from "app/interfaces/IUser";
+import { useEffect } from "react";
+type Props = {
+  setSelectedUsers: Function;
+};
 
-const Table = (props: Props) => {
+const Table = ({ setSelectedUsers }: Props) => {
   const [checkedRows, setCheckedRows] = useState([
     ...Array.from(new Set<string>()),
   ]);
+  const [isAllChecked, setAllChecked] = useState(false);
+
+  const checkAll = () => {
+    const allIds = fakeData.reduce<string[]>(
+      (allIdsArray, a: IUser) => [...allIdsArray, a.id],
+      []
+    );
+
+    if (allIds.sort().toString() === checkedRows.sort().toString()) {
+      return setCheckedRows([]);
+    } else {
+      setCheckedRows(allIds);
+    }
+  };
+
+  useEffect(() => {
+    setSelectedUsers({
+      total: fakeData.length,
+      selected: checkedRows.length,
+    });
+    const allIds = fakeData.reduce<string[]>(
+      (allIdsArray, a: IUser) => [...allIdsArray, a.id],
+      []
+    );
+
+    if (allIds.sort().toString() === checkedRows.sort().toString()) {
+      return setAllChecked(true);
+    } else {
+      setAllChecked(false);
+    }
+  }, [checkedRows]);
 
   console.log(checkedRows);
   return (
     <main className={styles.table}>
       <TableRow head checkedRows={checkedRows} setCheckedRows={setCheckedRows}>
         <TableColumn>
-          <CheckBox setChecked={setCheckedRows} />
+          <CheckBox isChecked={isAllChecked} setChecked={checkAll} />
         </TableColumn>
         {tableColumnsData.map((column) => (
           <TableColumn key={column.title}>{column.title}</TableColumn>
