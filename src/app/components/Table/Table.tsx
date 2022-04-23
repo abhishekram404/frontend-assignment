@@ -15,12 +15,12 @@ const Table = (props: Props) => {
           <CheckBox />
         </TableColumn>
         {tableColumnsData.map((column) => (
-          <TableColumn>{column.title}</TableColumn>
+          <TableColumn key={column.title}>{column.title}</TableColumn>
         ))}
       </TableRow>
 
       {fakeData.map((row) => (
-        <TableRow data={row} />
+        <TableRow data={row} key={row.id} />
       ))}
     </main>
   );
