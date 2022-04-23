@@ -1,10 +1,8 @@
 import React from "react";
 import styles from "app/components/TableColumn/TableColumn.module.scss";
-type Props = {
-  children?: string | React.ReactNode | any;
-};
+import { ITableColumn } from "app/interfaces/ITableColumn";
 
-const TableColumn = ({ children }: Props) => {
+const TableColumn = ({ children }: ITableColumn) => {
   return <div className={styles.tableColumn}>{children}</div>;
 };
 

@@ -2,15 +2,9 @@ import React from "react";
 import styles from "app/components/TableRow/TableRow.module.scss";
 import TableColumn from "app/components/TableColumn/TableColumn";
 import CheckBox from "app/components/CheckBox/CheckBox";
-import { IUser } from "app/interfaces/IUser";
+import { ITableRow } from "app/interfaces/ITableRow";
 
-type Props = {
-  children?: React.ReactNode;
-  head?: boolean;
-  data?: IUser;
-};
-
-const TableRow = ({ children, head = false, data }: Props) => {
+const TableRow = ({ children, head = false, data }: ITableRow) => {
   return (
     <div className={`${styles.tableRow} ${head ? styles.tableHead : ""}`}>
       {head ? (
