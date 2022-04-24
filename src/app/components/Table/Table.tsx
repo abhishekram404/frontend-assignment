@@ -48,7 +48,6 @@ const Table = ({ setSelectedUsers }: Props) => {
     }
   }, [checkedRows]);
 
-  console.log(checkedRows);
   return (
     <main className={styles.table}>
       <TableRow head checkedRows={checkedRows} setCheckedRows={setCheckedRows}>
