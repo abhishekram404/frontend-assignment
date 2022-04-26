@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "app/components/TopRow/TopRow.module.scss";
 import { FiPlus } from "react-icons/fi";
 import { useCallback } from "react";
@@ -7,11 +7,10 @@ type Props = {
     total: number;
     selected: number;
   };
-  searchQuery: string;
   setSearchQuery: Function;
 };
 
-const TopRow = ({ userInfo, searchQuery, setSearchQuery }: Props) => {
+const TopRow = ({ userInfo, setSearchQuery }: Props) => {
   const [searchText, setSearchText] = useState("");
 
   const debounce = (fn: Function, delay = 500) => {
@@ -23,15 +22,19 @@ const TopRow = ({ userInfo, searchQuery, setSearchQuery }: Props) => {
       timer = setTimeout(() => fn.apply(this, args), delay);
     };
   };
+
   const debouncedSetSearchQuery = useCallback(
-    debounce((a: string) => setSearchQuery(a), 1000),
+    debounce((a: any) => setSearchQuery(a), 1000),
     []
   );
 
   const handleSearchQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
-    debouncedSetSearchQuery(searchText);
   };
+
+  useEffect(() => {
+    debouncedSetSearchQuery(searchText);
+  }, [searchText]);
 
   return (
     <div className={styles.topRow}>
