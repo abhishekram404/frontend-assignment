@@ -8,11 +8,22 @@ import { fakeData } from "app/fakeData";
 import { useState } from "react";
 import { IUser } from "app/interfaces/IUser";
 import { useEffect } from "react";
+import useUsers from "app/hooks/useUsers";
 type Props = {
   setSelectedUsers: Function;
+  users: IUser[];
+  isLoading: boolean;
+  isError: boolean;
+  filteredResult: IUser[];
 };
 
-const Table = ({ setSelectedUsers }: Props) => {
+const Table = ({
+  setSelectedUsers,
+  users,
+  filteredResult,
+  isLoading,
+  isError,
+}: Props) => {
   const [checkedRows, setCheckedRows] = useState([
     ...Array.from(new Set<string>()),
   ]);
@@ -48,6 +59,19 @@ const Table = ({ setSelectedUsers }: Props) => {
     }
   }, [checkedRows]);
 
+  if (isLoading) {
+    return <h2>Loading</h2>;
+  }
+
+  if (isError) {
+    return (
+      <>
+        <h2>Something went wrong!</h2> <br />
+        <h5>We were unable to fetch the data.</h5>
+      </>
+    );
+  }
+
   return (
     <main className={styles.table}>
       <TableRow head checkedRows={checkedRows} setCheckedRows={setCheckedRows}>
@@ -59,14 +83,25 @@ const Table = ({ setSelectedUsers }: Props) => {
         ))}
       </TableRow>
 
-      {fakeData.map((row) => (
-        <TableRow
-          data={row}
-          key={row.id}
-          checkedRows={checkedRows}
-          setCheckedRows={setCheckedRows}
-        />
-      ))}
+      {filteredResult.length > 0
+        ? filteredResult.map((row: IUser) => (
+            <TableRow
+              data={row}
+              key={row.id}
+              checkedRows={checkedRows}
+              setCheckedRows={setCheckedRows}
+            />
+          ))
+        : users.map((row: IUser) => (
+            <TableRow
+              data={row}
+              key={row.id}
+              checkedRows={checkedRows}
+              setCheckedRows={setCheckedRows}
+            />
+          ))}
+
+      {}
     </main>
   );
 };

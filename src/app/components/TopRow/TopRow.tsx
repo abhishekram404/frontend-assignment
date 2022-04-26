@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "app/components/TopRow/TopRow.module.scss";
 import { FiPlus } from "react-icons/fi";
 import { useCallback } from "react";
@@ -24,7 +24,7 @@ const TopRow = ({ userInfo, setSearchQuery }: Props) => {
   };
 
   const debouncedSetSearchQuery = useCallback(
-    debounce((a: any) => setSearchQuery(a), 1000),
+    debounce((a: any) => setSearchQuery(a), 500),
     []
   );
 
@@ -36,6 +36,18 @@ const TopRow = ({ userInfo, setSearchQuery }: Props) => {
     debouncedSetSearchQuery(searchText);
   }, [searchText]);
 
+  const listener = (event: KeyboardEvent) => {
+    if (event.ctrlKey && event.key === "/") {
+      searchBoxRef.current.focus();
+    }
+  };
+
+  const searchBoxRef = useRef(document.createElement("input"));
+  useEffect(() => {
+    window.addEventListener("keydown", listener);
+    return () => window.removeEventListener("keydown", listener);
+  });
+
   return (
     <div className={styles.topRow}>
       <h2>
@@ -46,9 +58,10 @@ const TopRow = ({ userInfo, setSearchQuery }: Props) => {
       </h2>
       <div className={styles.rightColumn}>
         <input
+          ref={searchBoxRef}
           type="search"
           className={styles.searchBar}
-          placeholder="Search users"
+          placeholder="CTRL + / "
           value={searchText}
           onChange={handleSearchQueryChange}
         />

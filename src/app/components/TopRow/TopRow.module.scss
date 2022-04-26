@@ -1,8 +1,11 @@
 .topRow {
-  padding: 5px 10px;
+  padding: 5px 10px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  > h2 {
+    font-family: "Cabin", sans-serif;
+  }
 }
 
 .rightColumn {
@@ -16,8 +19,10 @@
   font-size: 1.2rem;
   outline: none;
   border-radius: 5px;
+  font-family: "Mulish", sans-serif;
 }
 .addNewUserBtn {
+  font-family: "Cabin", sans-serif;
   font-size: 1rem;
   padding: 13px;
   border-radius: 5px;
